@@ -2,10 +2,13 @@ from PIL import Image
 from bitarray import bitarray
 import sys
 
+# DEFINES
 BLACK_RGB = (0,0,0)
 WHITE_RGB = (255,255,255)
 
 def parseImage(filename):
+    """ return all rgb pixel
+    """
     print "reading " + filename + " data\n"
     im = Image.open(filename)
     rgb_im = im.convert('RGB')
@@ -19,6 +22,8 @@ def parseImage(filename):
     return mapImg
 
 def genNoiseImage(filename, mapImg):
+    """ create an image to locate lsb
+    """
     outname = filename.replace(".bmp", "-noise.bmp")
     size = (len(mapImg[0]), len(mapImg))
     im = Image.new('RGB', size)
@@ -31,6 +36,8 @@ def genNoiseImage(filename, mapImg):
     im.save(outname)
 
 def searchForString(filename, mapImg):
+    """export lsb to binary file
+    """
     outname = filename.replace(".bmp", "-binarydata")
     array = bitarray()
     size = (len(mapImg[0]), len(mapImg))
@@ -50,6 +57,8 @@ def searchForString(filename, mapImg):
     print "`strings " + outname + "` to search for plaintext\n"
 
 def mapToImg(filename, mapImg):
+    """export lsb to image
+    """
     outname = filename.replace(".bmp", "-binarydata")
     array = bitarray()
     size = (len(mapImg[0]), len(mapImg))
